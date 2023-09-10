@@ -1,11 +1,10 @@
 import requests
 import pprint
 from datetime import datetime, timedelta
-from twilio.rest import Client
 import os
 import redis
 # calculate 10 seconds in the future
-url = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 # print(f"Fetching data from {url} for {now}.")
 r = requests.get(url)
 nfl_json = r.json()
