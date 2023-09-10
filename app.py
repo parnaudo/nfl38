@@ -40,16 +40,18 @@ for events in nfl_json["events"]:
         team_display_name = competitors['team']['displayName']
         # pprint.pprint(competitors)
         key = f"{team_display_name}{events['shortName']}{nfl_json['season']['year']}".replace(" ","")
-        print(key)
+        
         if r.exists(key) == False:
             if int(score) == int(target_score_minus_fg):
                 message = f"The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
+                print(key)
                 r.set(key,value)
                 print(message)
             if int(score) == int(target_score_minus_td):
                 message = f"The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
+                print(key)
                 r.set(key,value)
                 print(message)
             # send_twilio_sms(phone_numbers,home_team_display_name,home_team_score,messaging_service_sid)
