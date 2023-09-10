@@ -60,8 +60,6 @@ for events in nfl_json["events"]:
         #     response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=away_message)
         #     print(away_message)
             # send_twilio_sms(phone_numbers,away_team_display_name,away_team_score,messaging_service_sid)
-            else:
-                print("no good scores")
         else:
             print("We already alerted")
 
