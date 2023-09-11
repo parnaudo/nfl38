@@ -29,6 +29,35 @@ value = 1
 
 sports_dict = {
     "New York Jets": 'Paul',
+    "Buffalo Bills": 'Mason',
+    "Kansas City Chiefs": 'Josh',
+    "Atlanta Falcons": 'Ben',
+    "Carolina Panthers": 'Greg',
+    "Cleveland Browns": 'Ray',
+    "Cincinnati Bengals": 'Jay',
+    "Jacksonville Jaguars": 'Dave',
+    "Minnesota Vikings": 'Frank',
+    "Tampa Bay Buccaneers": 'Anthony',
+    "New Orleans Saints": 'Brett',
+    "Tennessee Titans": 'Brent',
+    "Pittsburgh Steelers": 'Renzo',
+    "San Francisco 49ers": 'Jason',
+    "Washington Commanders": 'Beau',
+    "Arizona Cardinals": 'Dave',
+    "Baltimore Ravens": 'Greg',
+    "Houston Texans": 'Tim',
+    "Chicago Bears": 'Phil',
+    "Green Bay Packers": 'Nick',
+    "Denver Broncos": 'Ryan',
+    "Las Vegas Raiders": 'Bobby',
+    "New England Patriots": 'Jovany',
+    "Philadelphia Eagles": 'Chris',
+    "Los Angeles Chargers": 'Steve',
+    "Miami Dolphins": 'Allen',
+    "Seattle Seahawks": 'Armand',
+    "Los Angeles Rams": 'Kevin',
+    "New York Giants": 'Trevor',
+    "Dallas Cowboys": 'Jamie',
     "Chicago Bears": 'Phil',
     "New England Patriots": 'Jovany',
     "Indianapolis Colts": 'Scott',
@@ -48,10 +77,12 @@ for events in nfl_json["events"]:
         # pprint.pprint(competitors)
         progress_key = f"{team_display_name}{events['shortName']}{nfl_json['season']['year']}".replace(" ","")
         winning_key = f"{events['status']['type']['detail']}{team_display_name}{events['shortName']}{nfl_json['season']['year']}".replace(" ","")
-        print("WINNINGKEY: ",winning_key)
-
-        if timeleft == 'Final' and int(score) == target_score:
-            if r.exists(winning_key) == False:
+        # print("matchup: ",matchup)
+        # print("SCORE: ",score)
+        # print("TIMELEFT: ",timeleft)
+        print(team_display_name)
+        if timeleft == 'Final':
+            if r.exists(winning_key) == False and int(score) == target_score:
                 r.set(winning_key,value)
                 winning_message = f"The {team_display_name} finished the {matchup} game with {target_score} points, congrats to {sports_dict[team_display_name]}"
                 print(winning_message)
@@ -69,12 +100,7 @@ for events in nfl_json["events"]:
                 print(progress_key)
                 r.set(progress_key,value)
                 print(message)
-            # send_twilio_sms(phone_numbers,home_team_display_name,home_team_score,messaging_service_sid)
-        # if away_team_score == target_score_minus_fg or away_team_score == target_score_minus_td:
-        #     away_message = f"{away_team_display_name} might hit it with a score of {away_team_score} "
-        #     response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=away_message)
-        #     print(away_message)
-            # send_twilio_sms(phone_numbers,away_team_display_name,away_team_score,messaging_service_sid)
+
         else:
             print("We already alerted")
 
