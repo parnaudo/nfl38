@@ -1,6 +1,7 @@
 import requests
 import pprint
 from datetime import datetime, timedelta
+import time
 import os
 import redis
 # calculate 10 seconds in the future
@@ -9,7 +10,7 @@ url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 r = requests.get(url)
 nfl_json = r.json()
 # pprint.pprint(nfl_json["events"][0])
-target_score = 38
+target_score = 16
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
 
@@ -80,24 +81,27 @@ for events in nfl_json["events"]:
         # print("matchup: ",matchup)
         # print("SCORE: ",score)
         # print("TIMELEFT: ",timeleft)
-        print(team_display_name)
+        # print(team_display_name)
         if timeleft == 'Final':
             if r.exists(winning_key) == False and int(score) == target_score:
                 r.set(winning_key,value)
                 winning_message = f"The {team_display_name} finished the {matchup} game with {target_score} points, congrats to {sports_dict[team_display_name]}"
+                # print(winning_key)
                 print(winning_message)
+                time.sleep(5)
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=winning_message)
         elif  timeleft != 'Final':
+            # print(matchup)
             if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
                 message = f"The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
-                print("PROGRESSKEY: ",progress_key)
+                # print("PROGRESSKEY: ",progress_key)
                 r.set(progress_key,value)
                 print(message)
             elif int(score) == int(target_score_minus_td):
                 message = f"The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
-                print("PROGRESSKEY: ",progress_key)
+                # print("PROGRESSKEY: ",progress_key)
                 r.set(progress_key,value)
                 print(message)
 
