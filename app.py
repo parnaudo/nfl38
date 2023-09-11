@@ -14,12 +14,6 @@ target_score = 38
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
 
-phone_numbers = ["+15712127641"]
-
-        # if message.error_code is not None:
-        # print(message.error_code)
-        # print(message.error_message)
-
 headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
 }
