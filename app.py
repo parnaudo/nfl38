@@ -10,7 +10,7 @@ url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 r = requests.get(url)
 nfl_json = r.json()
 # pprint.pprint(nfl_json["events"][0])
-target_score = 16
+target_score = 38
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
 
