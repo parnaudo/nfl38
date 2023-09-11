@@ -9,7 +9,7 @@ url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 r = requests.get(url)
 nfl_json = r.json()
 # pprint.pprint(nfl_json["events"][0])
-target_score = 21
+target_score = 38
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
 
@@ -87,8 +87,8 @@ for events in nfl_json["events"]:
                 winning_message = f"The {team_display_name} finished the {matchup} game with {target_score} points, congrats to {sports_dict[team_display_name]}"
                 print(winning_message)
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=winning_message)
-        elif r.exists(progress_key) == False:
-            if int(score) == int(target_score_minus_fg):
+        elif  timeleft != 'Final':
+            if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
                 message = f"The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
                 print("PROGRESSKEY: ",progress_key)
@@ -97,12 +97,10 @@ for events in nfl_json["events"]:
             elif int(score) == int(target_score_minus_td):
                 message = f"The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
-                print(progress_key)
+                print("PROGRESSKEY: ",progress_key)
                 r.set(progress_key,value)
                 print(message)
 
-        else:
-            print("We already alerted")
 
         # print(f"team {}")
         # pprint.pprint(competitors)
