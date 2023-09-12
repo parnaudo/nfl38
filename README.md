@@ -10,4 +10,4 @@ It then posts to a simple phone notification service here: https://ntfy.sh/
 ntfy and tasker are running on an old android phone that then uses a Tasker utility created to remotely login to Whatsapp on an old phone and post as the authenticated user:
 https://old.reddit.com/r/tasker/comments/15ydqa1/project_share_sendreceive_whatsapp_message/
 
-This ended up being far more complicated due to the difficulty of interacting with groups in Whatsapp. Telegram would have been far easier but it's a viable workaround.
+This ended up being far more complicated due to the difficulty of interacting with groups in Whatsapp. Telegram would have been far easier but it's a far more viable workaround than getting all your friends to use Telegram 😅.
