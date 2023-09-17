@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import time
 import os
 import redis
+from twilio.rest import Client
 # calculate 10 seconds in the future
 url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 # print(f"Fetching data from {url} for {now}.")
@@ -22,6 +23,18 @@ headers = {
 r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 value = 1
 
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+#account_sid = 'MG07a5b06e7cd9a774b5e6bbfe6a2eaf6c'
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
+messaging_service_sid='MG07a5b06e7cd9a774b5e6bbfe6a2eaf6c'
+client = Client(account_sid, auth_token)
+message = client.messages \
+    .create(
+        body="am i blocked",
+        messaging_service_sid=messaging_service_sid,
+        # from_='+18885221227',
+        to="+15712127641"
+                )
 sports_dict = {
     "New York Jets": 'Paul',
     "Buffalo Bills": 'Mason',
@@ -92,7 +105,7 @@ for events in nfl_json["events"]:
                 # print("PROGRESSKEY: ",progress_key)
                 r.set(progress_key,value)
                 print(message)
-            elif int(score) == int(target_score_minus_td):
+            elif r.exists(progress_key) == False and int(score) == int(target_score_minus_td):
                 message = f"The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
                 response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
                 # print("PROGRESSKEY: ",progress_key)
