@@ -11,12 +11,14 @@ url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 r = requests.get(url)
 nfl_json = r.json()
 # pprint.pprint(nfl_json["events"][0])
-target_score = 38
+target_score = 10
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
 
 headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'token': '1234ABCD',
+    'accept': 'application/json',
+    'Content-Type': 'application/json'
 }
 
 # data = 'i love dada:heart:'
@@ -71,8 +73,12 @@ sports_dict = {
     "Indianapolis Colts": 'Scott',
     "Detroit Lions": "Erik"
 }
+test_data = {
+    "Phone": "120363153309445450@g.us",
+    "Body": "testing python implementation"
+}
+response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=test_data)
 
-# response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=data)
 home_team_display_name = nfl_json["events"][0]['competitions'][0]['competitors'][0]['team']['displayName']
     # away_team_score = game['competitions'][0]['competitors'][1]['score']
 away_team_display_name = nfl_json["events"][0]['competitions'][0]['competitors'][1]['team']['displayName']
@@ -96,23 +102,36 @@ for events in nfl_json["events"]:
                 # print(winning_key)
                 print(winning_message)
                 time.sleep(5)
-                response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=winning_message)
+                winning_json = {
+                            "Phone": "120363153309445450@g.us",
+                            "Body": winning_message
+                            }
+                response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=winning_json)
+                # response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=winning_message)
         elif  timeleft != 'Final':
             # print(matchup)
             if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
                 message = f"The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
-                response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
+                status_json = {
+                            "Phone": "120363153309445450@g.us",
+                            "Body": message
+                            }
+                response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=status_json)
                 # print("PROGRESSKEY: ",progress_key)
                 r.set(progress_key,value)
                 print(message)
+                time.sleep(5)
             elif r.exists(progress_key) == False and int(score) == int(target_score_minus_td):
                 message = f"The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} "
-                response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=message)
-                # print("PROGRESSKEY: ",progress_key)
+                status_json = {
+                            "Phone": "120363153309445450@g.us",
+                            "Body": message
+                            }
+                response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=status_json)
                 r.set(progress_key,value)
                 print(message)
-
+                time.sleep(5)
 
         # print(f"team {}")
         # pprint.pprint(competitors)
-    
+    # curl -d "Backup successful 😀" ntfy.sh/nfl38
