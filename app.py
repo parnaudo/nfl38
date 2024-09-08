@@ -73,11 +73,11 @@ sports_dict = {
     "Indianapolis Colts": 'Scott',
     "Detroit Lions": "Erik"
 }
-test_data = {
-    "Phone": "120363153309445450@g.us",
-    "Body": "🤖🤖🤖testing python implementation🤖🤖🤖"
-}
-response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=test_data)
+# test_data = {
+#     "Phone": "120363153309445450@g.us",
+#     "Body": "🤖🤖🤖testing python implementation🤖🤖🤖"
+# }
+# response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=test_data)
 
 home_team_display_name = nfl_json["events"][0]['competitions'][0]['competitors'][0]['team']['displayName']
     # away_team_score = game['competitions'][0]['competitors'][1]['score']
@@ -98,7 +98,7 @@ for events in nfl_json["events"]:
         if timeleft == 'Final':
             if r.exists(winning_key) == False and int(score) == target_score:
                 r.set(winning_key,value)
-                winning_message = f"🤖🤖🤖The {team_display_name} finished the {matchup} game with {target_score} points, congrats to {sports_dict[team_display_name]}🤖🤖🤖"
+                winning_message = f"🤖🚨The {team_display_name} finished the {matchup} game with {target_score} points, congrats to {sports_dict[team_display_name]}🤖🚨"
                 # print(winning_key)
                 print(winning_message)
                 time.sleep(5)
@@ -111,7 +111,7 @@ for events in nfl_json["events"]:
         elif  timeleft != 'Final':
             # print(matchup)
             if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
-                message = f"🤖🤖🤖The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft} 🤖🤖🤖"
+                message = f"🤖🚨The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
                             "Phone": "120363153309445450@g.us",
                             "Body": message
@@ -122,7 +122,7 @@ for events in nfl_json["events"]:
                 print(message)
                 time.sleep(5)
             elif r.exists(progress_key) == False and int(score) == int(target_score_minus_td):
-                message = f"🤖🤖🤖The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🤖🤖 "
+                message = f"🤖🚨The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
                             "Phone": "120363153309445450@g.us",
                             "Body": message
