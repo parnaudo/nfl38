@@ -103,7 +103,7 @@ for events in nfl_json["events"]:
                 print(winning_message)
                 time.sleep(5)
                 winning_json = {
-                            "Phone": "120363153309445450@g.us",
+                            "Phone": "120363170911301520@g.us",
                             "Body": winning_message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=winning_json)
@@ -113,7 +113,7 @@ for events in nfl_json["events"]:
             if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
                 message = f"🤖🚨The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
-                            "Phone": "120363153309445450@g.us",
+                            "Phone": "120363170911301520@g.us",
                             "Body": message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
@@ -124,7 +124,7 @@ for events in nfl_json["events"]:
             elif r.exists(progress_key) == False and int(score) == int(target_score_minus_td):
                 message = f"🤖🚨The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
-                            "Phone": "120363153309445450@g.us",
+                            "Phone": "120363170911301520@g.us",
                             "Body": message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)

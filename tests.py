@@ -77,8 +77,8 @@ sports_dict = {
 }
 #production phone number: 120363170911301520@g.us
 test_data = {
-    "Phone": "120363153309445450@g.us",
-    "Body": "😘😽😉"
+    "Phone": "120363170911301520@g.us",
+    "Body": "beep boop i'm a 🤖"
 }
 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=test_data)
 
