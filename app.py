@@ -14,9 +14,9 @@ nfl_json = r.json()
 target_score = 38
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
-whatsapp_service_api = "54.237.21.143"
+whatsapp_service_api = ""
 headers = {
-    'token': 'someverydifficulttokentoremember',
+    'token': '',
     'accept': 'application/json',
     'Content-Type': 'application/json'
 }
@@ -38,40 +38,39 @@ value = 1
 #         to="+15712127641"
 #                 )
 sports_dict = {
-    "New York Jets": 'Paul',
-    "Buffalo Bills": 'Mason',
-    "Kansas City Chiefs": 'Josh',
-    "Atlanta Falcons": 'Ben',
-    "Carolina Panthers": 'Greg',
-    "Cleveland Browns": 'Ray',
-    "Cincinnati Bengals": 'Jay',
-    "Jacksonville Jaguars": 'Dave',
-    "Minnesota Vikings": 'Frank',
-    "Tampa Bay Buccaneers": 'Anthony',
-    "New Orleans Saints": 'Brett',
-    "Tennessee Titans": 'Brent',
-    "Pittsburgh Steelers": 'Renzo',
-    "San Francisco 49ers": 'Jason',
+    "New York Jets": 'Phil',
+    "Buffalo Bills": 'Brett',
+    "Kansas City Chiefs": 'Rene',
+    "Atlanta Falcons": 'Matt',
+    "Carolina Panthers": 'Jay',
+    "Cleveland Browns": 'Frank',
+    "Cincinnati Bengals": 'Ray',
+    "Jacksonville Jaguars": 'Brent',
+    "Minnesota Vikings": 'Erik',
+    "Tampa Bay Buccaneers": 'Bobby',
+    "New Orleans Saints": 'Kevin',
+    "Tennessee Titans": 'Armand',
+    "Pittsburgh Steelers": 'Chris',
+    "San Francisco 49ers": 'Scott',
     "Washington Commanders": 'Beau',
-    "Arizona Cardinals": 'Dave',
-    "Baltimore Ravens": 'Greg',
-    "Houston Texans": 'Tim',
-    "Chicago Bears": 'Phil',
-    "Green Bay Packers": 'Nick',
+    "Arizona Cardinals": 'Greg',
+    "Baltimore Ravens": 'Steve',
+    "Houston Texans": 'Kyle',
+    "Chicago Bears": 'Dave',
+    "Green Bay Packers": 'Steve',
     "Denver Broncos": 'Ryan',
-    "Las Vegas Raiders": 'Bobby',
-    "New England Patriots": 'Jovany',
-    "Philadelphia Eagles": 'Chris',
-    "Los Angeles Chargers": 'Steve',
-    "Miami Dolphins": 'Allen',
-    "Seattle Seahawks": 'Armand',
-    "Los Angeles Rams": 'Kevin',
-    "New York Giants": 'Trevor',
-    "Dallas Cowboys": 'Jamie',
+    "Las Vegas Raiders": 'Ben',
+    "Philadelphia Eagles": 'Nick',
+    "Los Angeles Chargers": 'Dave',
+    "Miami Dolphins": 'Mason',
+    "Seattle Seahawks": 'Anthony',
+    "Los Angeles Rams": 'Josh',
+    "New York Giants": 'Jamie',
+    "Dallas Cowboys": 'Allen',
     "Chicago Bears": 'Phil',
-    "New England Patriots": 'Jovany',
-    "Indianapolis Colts": 'Scott',
-    "Detroit Lions": "Erik"
+    "New England Patriots": 'Jason',
+    "Indianapolis Colts": 'Greg',
+    "Detroit Lions": "Paul"
 }
 # test_data = {
 #     "Phone": "120363153309445450@g.us",
