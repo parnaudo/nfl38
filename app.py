@@ -14,9 +14,9 @@ nfl_json = r.json()
 target_score = 38
 target_score_minus_fg = target_score - 3
 target_score_minus_td = target_score - 7
-
+whatsapp_service_api = "54.237.21.143"
 headers = {
-    'token': '1234ABCD',
+    'token': 'someverydifficulttokentoremember',
     'accept': 'application/json',
     'Content-Type': 'application/json'
 }
@@ -77,7 +77,7 @@ test_data = {
     "Phone": "120363153309445450@g.us",
     "Body": "🤖🤖🤖testing python implementation🤖🤖🤖"
 }
-response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=test_data)
+response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=test_data)
 
 home_team_display_name = nfl_json["events"][0]['competitions'][0]['competitors'][0]['team']['displayName']
     # away_team_score = game['competitions'][0]['competitors'][1]['score']
@@ -106,7 +106,7 @@ for events in nfl_json["events"]:
                             "Phone": "120363153309445450@g.us",
                             "Body": winning_message
                             }
-                response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=winning_json)
+                response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=winning_json)
                 # response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=winning_message)
         elif  timeleft != 'Final':
             # print(matchup)
@@ -116,7 +116,7 @@ for events in nfl_json["events"]:
                             "Phone": "120363153309445450@g.us",
                             "Body": message
                             }
-                response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=status_json)
+                response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
                 # print("PROGRESSKEY: ",progress_key)
                 r.set(progress_key,value)
                 print(message)
@@ -127,7 +127,7 @@ for events in nfl_json["events"]:
                             "Phone": "120363153309445450@g.us",
                             "Body": message
                             }
-                response = requests.post('http://localhost:8080/chat/send/text', headers=headers, json=status_json)
+                response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
                 r.set(progress_key,value)
                 print(message)
                 time.sleep(5)
