@@ -4,12 +4,13 @@ from datetime import datetime, timedelta
 import time
 import os
 import redis
-from twilio.rest import Client
+from util import fetch_json_data
 # calculate 10 seconds in the future
 url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 # print(f"Fetching data from {url} for {now}.")
 r = requests.get(url)
-nfl_json = r.json()
+nfl_json = fetch_json_data(url)
+# nfl_json = r.json()
 # pprint.pprint(nfl_json["events"][0])
 target_score = 38
 target_score_minus_fg = target_score - 3
@@ -25,18 +26,6 @@ headers = {
 r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 value = 1
 
-# account_sid = os.environ['TWILIO_ACCOUNT_SID']
-# #account_sid = 'MG07a5b06e7cd9a774b5e6bbfe6a2eaf6c'
-# auth_token = os.environ['TWILIO_AUTH_TOKEN']
-# messaging_service_sid='MG07a5b06e7cd9a774b5e6bbfe6a2eaf6c'
-# client = Client(account_sid, auth_token)
-# message = client.messages \
-#     .create(
-#         body="am i blocked",
-#         messaging_service_sid=messaging_service_sid,
-#         # from_='+18885221227',
-#         to="+15712127641"
-#                 )
 sports_dict = {
     "New York Jets": 'Phil',
     "Buffalo Bills": 'Brett',
