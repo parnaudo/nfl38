@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import time
 import os
 import redis
-from util import fetch_json_data
+from util import fetch_json_data, is_scorigami
 # calculate 10 seconds in the future
 url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 # print(f"Fetching data from {url} for {now}.")
@@ -66,7 +66,8 @@ sports_dict = {
 #     "Body": "🤖🤖🤖testing python implementation🤖🤖🤖"
 # }
 # response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=test_data)
-
+production_phone = "120363170911301520@g.us"
+staging_phone = "120363153309445450@g.us"
 home_team_display_name = nfl_json["events"][0]['competitions'][0]['competitors'][0]['team']['displayName']
     # away_team_score = game['competitions'][0]['competitors'][1]['score']
 away_team_display_name = nfl_json["events"][0]['competitions'][0]['competitors'][1]['team']['displayName']
@@ -91,17 +92,17 @@ for events in nfl_json["events"]:
                 print(winning_message)
                 time.sleep(5)
                 winning_json = {
-                            "Phone": "120363170911301520@g.us",
+                            "Phone": production_phone,
                             "Body": winning_message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=winning_json)
-                # response = requests.post('http://ntfy.sh/nfl38club', headers=headers, data=winning_message)
+                is_scorigami(target_score, production_phone)
         elif  timeleft != 'Final':
             # print(matchup)
             if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
                 message = f"🤖🚨The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
-                            "Phone": "120363170911301520@g.us",
+                            "Phone": production_phone,
                             "Body": message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
@@ -112,7 +113,7 @@ for events in nfl_json["events"]:
             elif r.exists(progress_key) == False and int(score) == int(target_score_minus_td):
                 message = f"🤖🚨The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
-                            "Phone": "120363170911301520@g.us",
+                            "Phone": production_phone,
                             "Body": message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
