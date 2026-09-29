@@ -27,38 +27,38 @@ r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 value = 1
 
 sports_dict = {
-    "New York Jets": 'Mason',
-    "Buffalo Bills": 'Stefano',
-    "Kansas City Chiefs": 'Paul',
-    "Atlanta Falcons": 'Frank',
-    "Carolina Panthers": 'Bobby',
-    "Cleveland Browns": 'Steve',
-    "Cincinnati Bengals": 'Jamie',
-    "Jacksonville Jaguars": 'Scott',
-    "Minnesota Vikings": 'Chris',
-    "Tampa Bay Buccaneers": 'Steve',
-    "New Orleans Saints": 'Nick',
-    "Tennessee Titans": 'Brent',
-    "Pittsburgh Steelers": 'Phil',
-    "San Francisco 49ers": 'Kyle',
-    "Washington Commanders": 'Ray',
-    "Arizona Cardinals": 'Jason',
-    "Baltimore Ravens": 'Beau',
-    "Houston Texans": 'Matt',
-    "Green Bay Packers": 'Brett',
+    "New England Patriots": 'Allen',
+    "Buffalo Bills": 'Greg',
+    "Miami Dolphins": 'Chris',
+    "New York Jets": 'Paul',
+    "Pittsburgh Steelers": 'Rene',
+    "Baltimore Ravens": 'Matt',
+    "Cincinnati Bengals": 'Ben',
+    "Cleveland Browns": 'Josh',
+    "Jacksonville Jaguars": 'Ryan',
+    "Houston Texans": 'Phil',
+    "Indianapolis Colts": 'Jay',
+    "Tennessee Titans": 'Anthony',
     "Denver Broncos": 'Greg',
-    "Las Vegas Raiders": 'Kevin',
-    "Philadelphia Eagles": 'Josh',
-    "Los Angeles Chargers": 'Dave',
-    "Miami Dolphins": 'Rene',
-    "Seattle Seahawks": 'Ryan',
-    "Los Angeles Rams": 'Erik',
-    "New York Giants": 'Jay',
-    "Dallas Cowboys": 'Anthony',
-    "Chicago Bears": 'Allen',
-    "New England Patriots": 'Ben',
-    "Indianapolis Colts": 'Greg',
-    "Detroit Lions": "Tim"
+    "Los Angeles Chargers": 'Beau',
+    "Kansas City Chiefs": 'Brent',
+    "Las Vegas Raiders": 'Ryan',
+    "Philadelphia Eagles": 'Jamie',
+    "Dallas Cowboys": 'Steve',
+    "Washington Commanders": 'Mason',
+    "New York Giants": 'Mike',
+    "Chicago Bears": 'Kevin',
+    "Green Bay Packers": 'Steve',
+    "Minnesota Vikings": 'Ray',
+    "Detroit Lions": 'Erik',
+    "Carolina Panthers": 'Jason',
+    "Tampa Bay Buccaneers": 'Dave',
+    "Atlanta Falcons": 'Nick',
+    "New Orleans Saints": 'Brett',
+    "Seattle Seahawks": 'Kyle',
+    "Los Angeles Rams": 'Tim',
+    "San Francisco 49ers": 'Bobby',
+    "Arizona Cardinals": 'Scott',
 }
 # test_data = {
 #     "Phone": "120363153309445450@g.us",
@@ -91,7 +91,7 @@ for events in nfl_json["events"]:
                 print(winning_message)
                 time.sleep(5)
                 winning_json = {
-                            "Phone": production_phone,
+                            "Phone": staging_phone,
                             "Body": winning_message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=winning_json)
@@ -101,7 +101,7 @@ for events in nfl_json["events"]:
             if r.exists(progress_key) == False and int(score) == int(target_score_minus_fg):
                 message = f"🤖🚨The {team_display_name} are a field goal away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
-                            "Phone": production_phone,
+                            "Phone": staging_phone,
                             "Body": message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
@@ -112,14 +112,23 @@ for events in nfl_json["events"]:
             elif r.exists(progress_key) == False and int(score) == int(target_score_minus_td):
                 message = f"🤖🚨The {team_display_name} are a touchdown away from the magic {target_score} with a score of {score} in the matchup: {matchup} with the clock at {timeleft}🤖🚨"
                 status_json = {
-                            "Phone": production_phone,
+                            "Phone": staging_phone,
                             "Body": message
                             }
                 response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
                 r.set(progress_key,value)
                 print(message)
                 time.sleep(5)
-
+            elif r.exists(progress_key) == False and int(score) == int(target_score):
+                message = f"🤖🚨The {team_display_name} are at the magic score of {target_score} in the matchup: {matchup} with the clock at {timeleft} STOP THE COUNT!!!!🤖🚨"
+                status_json = {
+                            "Phone": staging_phone,
+                            "Body": message
+                            }
+                response = requests.post(f'http://{whatsapp_service_api}:8080/chat/send/text', headers=headers, json=status_json)
+                r.set(progress_key,value)
+                print(message)
+                time.sleep(5)
         # print(f"team {}")
         # pprint.pprint(competitors)
     # curl -d "Backup successful 😀" ntfy.sh/nfl38
